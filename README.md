@@ -106,6 +106,43 @@ The project is developed with the following tools and technologies:
 To run the CultureGR project locally, follow these steps:
 
 1. **Clone the Repository:**
-   ```bash
-   [git clone https://github.com/yourusername/CultureGR.git](https://github.com/AntoniouIoannis/myCodingFactoryExamsFinalProject.git)
+ ## How to Clone the Repository and Open it Locally
+
+Follow these steps to clone the repository, install Visual Studio Code, and open your project.
+
+First, you need to clone the repository to your local machine. Open your terminal or command prompt and run the following command:
+
+```bash
+git clone https://github.com/AntoniouIoannis/myCodingFactoryExamsFinalProject.git
+
+- [Visual Studio 2022](https://visualstudio.microsoft.com/vs/)
+
+### Create a User `CultureGRAdmin` for SQL Server
+
+In order to connect to the SQL Server database, you'll need to create a user `CultureGRAdmin` with the password `12345678`. Follow these steps:
+
+1. Open **SQL Server Management Studio (SSMS)** and connect to your local instance using `localhost\SQLEXPRESS`.
+   
+2. Once connected, run the following SQL script to create the user:
+
+```sql
+USE [master];
+GO
+
+-- Create the login for the user
+CREATE LOGIN CultureGRAdmin WITH PASSWORD = '12345678';
+GO
+
+-- Create the user in the specific database (replace 'YourDatabaseName' with the name of your database)
+USE [YourDatabaseName];
+GO
+
+CREATE USER CultureGRAdmin FOR LOGIN CultureGRAdmin;
+GO
+
+-- Grant necessary permissions to the user (optional based on your needs)
+ALTER ROLE db_owner ADD MEMBER CultureGRAdmin;
+GO
+
+
 
