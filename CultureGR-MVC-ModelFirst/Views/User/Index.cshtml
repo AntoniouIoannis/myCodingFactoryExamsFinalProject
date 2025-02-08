@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "CultureGR";
+}
+
+@using Microsoft.AspNetCore.Identity
+
+@if (User.IsInRole("Admin"))
+{
+    <div>
+        <span>Admin Dashboard</span>
+    </div>
+}
+
+@if (User.IsInRole("ChiefEditor"))
+{
+    <div class="text-center">
+        <span>Chief Editor Dashboard</span>
+    </div>
+}
+
+@if (User.IsInRole("TextEditor"))
+{
+    <div class="text-center">
+        <span>Text Editor Dashboard</span>
+    </div>
+}
+
+@if (User.IsInRole("WebTextWriter"))
+{
+    <div class="text-center">
+        <span>Web Text Writer Dashboard</span>
+    </div>
+}
+
+@if (User.IsInRole("Reader"))
+{
+    <div>
+        <span>Subscriber Dashboard</span>
+    </div>
+}
+
+@if (User.IsInRole("Sponsor"))
+{
+    <div>
+        <span>Sponsor Dashboard</span>
+    </div>
+}

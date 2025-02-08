@@ -1,0 +1,29 @@
+﻿@model IEnumerable<CultureGR_MVC_ModelFirst.Data.Monument>
+
+<h1>Λίστα Μνημείων</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Τοποθεσία</th>
+            <th>Όνομα Μνημείου</th>
+            <th>Εποχή</th>
+            <th>Περιγραφή</th>
+            <th>Ενέργειες</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.monumentLocation</td>
+                <td>@item.monumentName</td>
+                <td>@item.monumentEra</td>
+                <td>@item.monumentDesc</td>
+                <td>
+                    <a href="@Url.Action("Details", "Monument", new { id = item.Id })" class="btn btn-info">Προβολή</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

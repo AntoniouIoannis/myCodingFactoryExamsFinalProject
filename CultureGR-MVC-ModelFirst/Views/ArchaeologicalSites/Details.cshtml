@@ -1,0 +1,17 @@
+﻿@model CultureGR_MVC_ModelFirst.Data.ArchaeologicalSite
+
+@{
+    ViewData["Title"] = "Λεπτομέρειες Αρχαιολογικού Μνημείου";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h3>@Model.Region</h3>
+    <p><strong>Περιγραφή:</strong> @Model.Description</p>
+    <p><strong>Τοποθεσία:</strong> @Model.Location</p>
+</div>
+
+<div>
+    <a href="@Url.Action("Index", "ArchaeologicalSites")" class="btn btn-primary">Επιστροφή στη Λίστα</a>
+</div>

@@ -1,35 +1,66 @@
+using CultureGR_MVC_ModelFirst.Configuration;
+using CultureGR_MVC_ModelFirst.Data;
+using CultureGR_MVC_ModelFirst.Repositories;
+using CultureGR_MVC_ModelFirst.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
+using Serilog;
 
-namespace CultureGR_MVC_ModelFirst;
-
-public class Program
+namespace CultureGR_MVC_ModelFirst
 {
-    public static void Main(string[] args)
+    public class Program
     {
-        var builder = WebApplication.CreateBuilder(args);
-
-        // Add services to the container.
-
-        builder.Services.AddControllers();
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
-
-        var app = builder.Build();
-
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
+        public static void Main(string[] args)
         {
-            app.UseSwagger();
-            app.UseSwaggerUI();
+            var builder = WebApplication.CreateBuilder(args);
+            var connString = builder.Configuration.GetConnectionString("DefaultConnection");
+            builder.Services.AddDbContext<CultureGRDBContext>(options => options.UseSqlServer(connString));
+            builder.Services.AddRepositories();
+
+            builder.Host.UseSerilog((context, config) =>
+            {
+                config.ReadFrom.Configuration(context.Configuration);
+            });
+
+            builder.Services.AddAutoMapper(typeof(MapperConfig));
+
+            builder.Services.AddRepositories();
+            builder.Services.AddScoped<IApplicationService, ApplicationService>();
+            builder.Services.AddScoped<ISubscriberService, SubscriberService>();
+
+            // Add services to the container.
+            builder.Services.AddControllersWithViews();
+
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(option =>
+                {
+                    option.LoginPath = "/CultureGRUser/Login";
+                    option.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                });
+
+            var app = builder.Build();
+
+            // Configure the HTTP request pipeline.
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios,
+                // see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.MapControllerRoute(
+                name: "default",    //  starting web page
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.Run();
         }
-
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-
-
-        app.MapControllers();
-
-        app.Run();
     }
 }

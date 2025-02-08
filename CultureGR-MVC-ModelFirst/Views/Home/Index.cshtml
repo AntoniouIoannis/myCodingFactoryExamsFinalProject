@@ -1,0 +1,41 @@
+﻿@model CultureGR_MVC_ModelFirst.Models.HomeViewModel
+
+@{
+    ViewData["Title"] = "CultureGR Home Page";
+}
+
+<div class="container">
+    <div class="mt-4 p-5 bg-primary rounded">
+        <span class="display-3 text-black">Welcome to CultureGR</span>
+        <span class="d-block lead text-white">time to walk in a culture places of Greece!</span><hr />
+        <p>
+            It's @Model.CurrentDay, time to walk in a museums. Let's Go!!!
+        </p>
+
+    </div>
+    <br />
+    <a class="btn btn-outline-success" asp-controller="Museums" asp-action="Index">
+        Museums! <br>Let's take a walk here...
+    </a>
+    <a class="btn btn-outline-success" asp-controller="Monuments" asp-action="Index">
+        Monuments! <br>Let's take a walk here...
+    </a>
+    <a class="btn btn-outline-success" asp-controller="ArchaeologicalSites" asp-action="Index" target="_blank"> 
+        Archaeological Sites! <br>Let's take a walk here...
+     </a>
+    <a class="btn btn-outline-success" asp-controller="CulturalCenters" asp-action="Index" target="_blank">
+        Cultural Centers. <br>Cultural events and exhibits. Promote the Culture
+    </a>
+    <a class="btn btn-outline-success" asp-controller="Excavations" asp-action="Index">
+        Excavations! <br>Lets Stay Tuned to see what we will find...
+    </a>
+    <br><hr /><hr />
+
+    <p>We already know each other? <br>Then Login...</p>
+    <a class="btn btn-outline-success" asp-controller="User" asp-action="Login">Login Here!</a>
+    <br><hr />
+
+    <p>Hello Viewer. <br>If you like us Sign Up...</p>
+    <a class="btn btn-outline-success" asp-controller="User" asp-action="Signup">Sign Up Here!</a>
+    <hr />
+</div>

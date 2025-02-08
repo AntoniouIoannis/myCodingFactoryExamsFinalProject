@@ -1,6 +1,0 @@
-@CultureGR_MVC_ModelFirst_HostAddress = http://localhost:5268
-
-GET {{CultureGR_MVC_ModelFirst_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

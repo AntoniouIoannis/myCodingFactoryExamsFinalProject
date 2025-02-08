@@ -1,0 +1,38 @@
+﻿@model IEnumerable<CultureGR_MVC_ModelFirst.Data.Museum>
+
+@{
+    ViewData["Title"] = "Museums List";
+}
+
+<h2 class="text-center">List of Museums</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Region</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Category Museum</th>
+            <th>Collections</th>
+            <th>Rating</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var museum in Model)
+        {
+            <tr>
+                <td>@museum.mus_region</td>
+                <td>@museum.mus_name</td>
+                <td>@museum.mus_desc</td>
+                <td>@museum.mus_address</td>
+                <td>@museum.mus_phone</td>
+                <td>@museum.mus_open</td>
+                <td>@museum.CategoryMuseum</td>
+                <td>@museum.Collections</td>
+                <td>@museum.mus_avg_rate</td>
+            </tr>
+        }
+    </tbody>
+</table>

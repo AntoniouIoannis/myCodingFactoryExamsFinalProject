@@ -1,0 +1,910 @@
+[05-02-2025 15:21:07069 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("15"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[05-02-2025 15:21:07100 +02:00 Microsoft.EntityFrameworkCore.Migrations ] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+[05-02-2025 15:21:07132 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("29"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result"
+[05-02-2025 15:21:07189 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;"
+[05-02-2025 15:21:07198 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[05-02-2025 15:21:07199 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+[05-02-2025 15:21:07217 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("16"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];"
+[05-02-2025 15:21:07226 +02:00 Microsoft.EntityFrameworkCore.Migrations ] Applying migration '"20250205132044_SecondFixes"'.
+[05-02-2025 15:21:07312 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("24"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Users] ADD [Identity] int NOT NULL DEFAULT 0;"
+[05-02-2025 15:21:07316 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Users] ADD [WorkPhoneNumber] nvarchar(max) NOT NULL DEFAULT N'';"
+[05-02-2025 15:21:07320 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [ArchaeologicalSiteId] int NULL;"
+[05-02-2025 15:21:07321 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [CategoryMuseumId] int NULL;"
+[05-02-2025 15:21:07324 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [CollectionId] int NULL;"
+[05-02-2025 15:21:07327 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [ExcavationId] int NULL;"
+[05-02-2025 15:21:07330 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [InsertedAt] datetime2 NOT NULL DEFAULT '0001-01-01T00:00:00.0000000';"
+[05-02-2025 15:21:07333 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [ModifiedAt] datetime2 NOT NULL DEFAULT '0001-01-01T00:00:00.0000000';"
+[05-02-2025 15:21:07335 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [MonumentId] int NULL;"
+[05-02-2025 15:21:07336 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [MuseumId] int NULL;"
+[05-02-2025 15:21:07338 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [TextEditorId] int NULL;"
+[05-02-2025 15:21:07340 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [TimePeriodId] int NULL;"
+[05-02-2025 15:21:07353 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("13"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [ArchaeologicalSites] (
+    [Id] int NOT NULL IDENTITY,
+    [Region] int NOT NULL,
+    [Description] nvarchar(MAX) NOT NULL,
+    [Location] nvarchar(150) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_ArchaeologicalSites] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_ArchaeologicalSites_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:21:07364 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("10"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [CategoriesMuseums] (
+    [Id] int NOT NULL IDENTITY,
+    [categoryName] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_CategoriesMuseums] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_CategoriesMuseums_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:21:07370 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("6"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Collections] (
+    [Id] int NOT NULL IDENTITY,
+    [collectionName] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Collections] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Collections_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:21:07375 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Excavations] (
+    [Id] int NOT NULL IDENTITY,
+    [Region] int NOT NULL,
+    [Description] nvarchar(MAX) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Excavations] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Excavations_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:21:07380 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Monuments] (
+    [Id] int NOT NULL IDENTITY,
+    [monumentName] nvarchar(150) NOT NULL,
+    [monumentDesc] nvarchar(MAX) NOT NULL,
+    [monumentLocation] nvarchar(150) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Monuments] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Monuments_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:21:08105 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("6"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [TextEditor] (
+    [Id] int NOT NULL IDENTITY,
+    [ΕditorialΤeam] nvarchar(max) NOT NULL,
+    [Username] nvarchar(max) NOT NULL,
+    [WorkPhoneNumber] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    CONSTRAINT [PK_TextEditor] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_TextEditor_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:21:08111 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("6"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [TimePeriods] (
+    [Id] int NOT NULL IDENTITY,
+    [periodName] nvarchar(max) NOT NULL,
+    [periodStartEnd] nvarchar(max) NOT NULL,
+    [periodDesc] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_TimePeriods] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_TimePeriods_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:21:08137 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Failed executing DbCommand ("24"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Museums] (
+    [Id] int NOT NULL,
+    [mus_region] nvarchar(max) NOT NULL,
+    [mus_name] nvarchar(max) NOT NULL,
+    [mus_desc] nvarchar(max) NOT NULL,
+    [mus_address] nvarchar(max) NOT NULL,
+    [mus_coordinate] nvarchar(max) NOT NULL,
+    [mus_phone] nvarchar(max) NOT NULL,
+    [mus_open] nvarchar(max) NOT NULL,
+    [category_Id] int NOT NULL,
+    [collection_Id] int NOT NULL,
+    [timeperiod_Id] int NOT NULL,
+    [mus_avg_rate] float NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Museums] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Museums_CategoriesMuseums_Id] FOREIGN KEY ([Id]) REFERENCES [CategoriesMuseums] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Museums_Collections_Id] FOREIGN KEY ([Id]) REFERENCES [Collections] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Museums_TimePeriods_Id] FOREIGN KEY ([Id]) REFERENCES [TimePeriods] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Museums_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:27:14219 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("13"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[05-02-2025 15:27:14255 +02:00 Microsoft.EntityFrameworkCore.Migrations ] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+[05-02-2025 15:27:14279 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("21"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result"
+[05-02-2025 15:27:14331 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;"
+[05-02-2025 15:27:14339 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[05-02-2025 15:27:14340 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+[05-02-2025 15:27:14356 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("13"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];"
+[05-02-2025 15:27:14364 +02:00 Microsoft.EntityFrameworkCore.Migrations ] Applying migration '"20250205132044_SecondFixes"'.
+[05-02-2025 15:27:14431 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("9"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Users] ADD [Identity] int NOT NULL DEFAULT 0;"
+[05-02-2025 15:27:14433 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Users] ADD [WorkPhoneNumber] nvarchar(max) NOT NULL DEFAULT N'';"
+[05-02-2025 15:27:14436 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [ArchaeologicalSiteId] int NULL;"
+[05-02-2025 15:27:14437 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [CategoryMuseumId] int NULL;"
+[05-02-2025 15:27:14438 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [CollectionId] int NULL;"
+[05-02-2025 15:27:14439 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [ExcavationId] int NULL;"
+[05-02-2025 15:27:14441 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [InsertedAt] datetime2 NOT NULL DEFAULT '0001-01-01T00:00:00.0000000';"
+[05-02-2025 15:27:14442 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [ModifiedAt] datetime2 NOT NULL DEFAULT '0001-01-01T00:00:00.0000000';"
+[05-02-2025 15:27:14444 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [MonumentId] int NULL;"
+[05-02-2025 15:27:14445 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [MuseumId] int NULL;"
+[05-02-2025 15:27:14446 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [TextEditorId] int NULL;"
+[05-02-2025 15:27:14447 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [TimePeriodId] int NULL;"
+[05-02-2025 15:27:14454 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("7"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [ArchaeologicalSites] (
+    [Id] int NOT NULL IDENTITY,
+    [Region] int NOT NULL,
+    [Description] nvarchar(MAX) NOT NULL,
+    [Location] nvarchar(150) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_ArchaeologicalSites] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_ArchaeologicalSites_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:27:14458 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [CategoriesMuseums] (
+    [Id] int NOT NULL IDENTITY,
+    [categoryName] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_CategoriesMuseums] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_CategoriesMuseums_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:27:14462 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Collections] (
+    [Id] int NOT NULL IDENTITY,
+    [collectionName] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Collections] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Collections_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:27:14465 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Excavations] (
+    [Id] int NOT NULL IDENTITY,
+    [Region] int NOT NULL,
+    [Description] nvarchar(MAX) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Excavations] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Excavations_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:27:14469 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Monuments] (
+    [Id] int NOT NULL IDENTITY,
+    [monumentName] nvarchar(150) NOT NULL,
+    [monumentDesc] nvarchar(MAX) NOT NULL,
+    [monumentLocation] nvarchar(150) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Monuments] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Monuments_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:27:14475 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [TextEditor] (
+    [Id] int NOT NULL IDENTITY,
+    [ΕditorialΤeam] nvarchar(max) NOT NULL,
+    [Username] nvarchar(max) NOT NULL,
+    [WorkPhoneNumber] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    CONSTRAINT [PK_TextEditor] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_TextEditor_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:27:14479 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [TimePeriods] (
+    [Id] int NOT NULL IDENTITY,
+    [periodName] nvarchar(max) NOT NULL,
+    [periodStartEnd] nvarchar(max) NOT NULL,
+    [periodDesc] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_TimePeriods] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_TimePeriods_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:27:14496 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Failed executing DbCommand ("16"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Museums] (
+    [Id] int NOT NULL,
+    [mus_region] nvarchar(max) NOT NULL,
+    [mus_name] nvarchar(max) NOT NULL,
+    [mus_desc] nvarchar(max) NOT NULL,
+    [mus_address] nvarchar(max) NOT NULL,
+    [mus_coordinate] nvarchar(max) NOT NULL,
+    [mus_phone] nvarchar(max) NOT NULL,
+    [mus_open] nvarchar(max) NOT NULL,
+    [category_Id] int NOT NULL,
+    [collection_Id] int NOT NULL,
+    [timeperiod_Id] int NOT NULL,
+    [mus_avg_rate] float NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Museums] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Museums_CategoriesMuseums_Id] FOREIGN KEY ([Id]) REFERENCES [CategoriesMuseums] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Museums_Collections_Id] FOREIGN KEY ([Id]) REFERENCES [Collections] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Museums_TimePeriods_Id] FOREIGN KEY ([Id]) REFERENCES [TimePeriods] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Museums_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:27:16217 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("6"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result"
+[05-02-2025 15:31:55054 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("13"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[05-02-2025 15:31:55086 +02:00 Microsoft.EntityFrameworkCore.Migrations ] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+[05-02-2025 15:31:55109 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("20"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result"
+[05-02-2025 15:31:55162 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;"
+[05-02-2025 15:31:55169 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[05-02-2025 15:31:55169 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+[05-02-2025 15:31:55185 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("14"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];"
+[05-02-2025 15:31:55196 +02:00 Microsoft.EntityFrameworkCore.Migrations ] Applying migration '"20250205132044_SecondFixes"'.
+[05-02-2025 15:31:55261 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("9"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Users] ADD [Identity] int NOT NULL DEFAULT 0;"
+[05-02-2025 15:31:55264 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Users] ADD [WorkPhoneNumber] nvarchar(max) NOT NULL DEFAULT N'';"
+[05-02-2025 15:31:55267 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [ArchaeologicalSiteId] int NULL;"
+[05-02-2025 15:31:55269 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [CategoryMuseumId] int NULL;"
+[05-02-2025 15:31:55271 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [CollectionId] int NULL;"
+[05-02-2025 15:31:55274 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [ExcavationId] int NULL;"
+[05-02-2025 15:31:55276 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [InsertedAt] datetime2 NOT NULL DEFAULT '0001-01-01T00:00:00.0000000';"
+[05-02-2025 15:31:55278 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [ModifiedAt] datetime2 NOT NULL DEFAULT '0001-01-01T00:00:00.0000000';"
+[05-02-2025 15:31:55280 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [MonumentId] int NULL;"
+[05-02-2025 15:31:55282 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [MuseumId] int NULL;"
+[05-02-2025 15:31:55284 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [TextEditorId] int NULL;"
+[05-02-2025 15:31:55285 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [TimePeriodId] int NULL;"
+[05-02-2025 15:31:55294 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("8"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [ArchaeologicalSites] (
+    [Id] int NOT NULL IDENTITY,
+    [Region] int NOT NULL,
+    [Description] nvarchar(MAX) NOT NULL,
+    [Location] nvarchar(150) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_ArchaeologicalSites] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_ArchaeologicalSites_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:31:55297 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [CategoriesMuseums] (
+    [Id] int NOT NULL IDENTITY,
+    [categoryName] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_CategoriesMuseums] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_CategoriesMuseums_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:31:55300 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Collections] (
+    [Id] int NOT NULL IDENTITY,
+    [collectionName] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Collections] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Collections_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:31:55303 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Excavations] (
+    [Id] int NOT NULL IDENTITY,
+    [Region] int NOT NULL,
+    [Description] nvarchar(MAX) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Excavations] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Excavations_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:31:55306 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Monuments] (
+    [Id] int NOT NULL IDENTITY,
+    [monumentName] nvarchar(150) NOT NULL,
+    [monumentDesc] nvarchar(MAX) NOT NULL,
+    [monumentLocation] nvarchar(150) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Monuments] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Monuments_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:31:55310 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [TextEditor] (
+    [Id] int NOT NULL IDENTITY,
+    [ΕditorialΤeam] nvarchar(max) NOT NULL,
+    [Username] nvarchar(max) NOT NULL,
+    [WorkPhoneNumber] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    CONSTRAINT [PK_TextEditor] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_TextEditor_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:31:55312 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [TimePeriods] (
+    [Id] int NOT NULL IDENTITY,
+    [periodName] nvarchar(max) NOT NULL,
+    [periodStartEnd] nvarchar(max) NOT NULL,
+    [periodDesc] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_TimePeriods] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_TimePeriods_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:31:55328 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Failed executing DbCommand ("16"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Museums] (
+    [Id] int NOT NULL,
+    [mus_region] nvarchar(max) NOT NULL,
+    [mus_name] nvarchar(max) NOT NULL,
+    [mus_desc] nvarchar(max) NOT NULL,
+    [mus_address] nvarchar(max) NOT NULL,
+    [mus_coordinate] nvarchar(max) NOT NULL,
+    [mus_phone] nvarchar(max) NOT NULL,
+    [mus_open] nvarchar(max) NOT NULL,
+    [category_Id] int NOT NULL,
+    [collection_Id] int NOT NULL,
+    [timeperiod_Id] int NOT NULL,
+    [mus_avg_rate] float NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Museums] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Museums_CategoriesMuseums_Id] FOREIGN KEY ([Id]) REFERENCES [CategoriesMuseums] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Museums_Collections_Id] FOREIGN KEY ([Id]) REFERENCES [Collections] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Museums_TimePeriods_Id] FOREIGN KEY ([Id]) REFERENCES [TimePeriods] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Museums_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 15:31:56952 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result"
+[05-02-2025 16:32:48503 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("15"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[05-02-2025 16:32:48556 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("11"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+[05-02-2025 16:32:48569 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];"
+[05-02-2025 16:33:31149 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("16"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[05-02-2025 16:33:31181 +02:00 Microsoft.EntityFrameworkCore.Migrations ] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+[05-02-2025 16:33:31200 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("16"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result"
+[05-02-2025 16:33:31258 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;"
+[05-02-2025 16:33:31267 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[05-02-2025 16:33:31268 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+[05-02-2025 16:33:31272 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];"
+[05-02-2025 16:33:31281 +02:00 Microsoft.EntityFrameworkCore.Migrations ] Applying migration '"20250205132044_SecondFixes"'.
+[05-02-2025 16:33:31352 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("8"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Users] ADD [Identity] int NOT NULL DEFAULT 0;"
+[05-02-2025 16:33:31353 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Users] ADD [WorkPhoneNumber] nvarchar(max) NOT NULL DEFAULT N'';"
+[05-02-2025 16:33:31355 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [ArchaeologicalSiteId] int NULL;"
+[05-02-2025 16:33:31357 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [CategoryMuseumId] int NULL;"
+[05-02-2025 16:33:31358 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [CollectionId] int NULL;"
+[05-02-2025 16:33:31360 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [ExcavationId] int NULL;"
+[05-02-2025 16:33:31362 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [InsertedAt] datetime2 NOT NULL DEFAULT '0001-01-01T00:00:00.0000000';"
+[05-02-2025 16:33:31365 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [ModifiedAt] datetime2 NOT NULL DEFAULT '0001-01-01T00:00:00.0000000';"
+[05-02-2025 16:33:31367 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [MonumentId] int NULL;"
+[05-02-2025 16:33:31369 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [MuseumId] int NULL;"
+[05-02-2025 16:33:31370 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [TextEditorId] int NULL;"
+[05-02-2025 16:33:31371 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [TimePeriodId] int NULL;"
+[05-02-2025 16:33:31379 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("8"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [ArchaeologicalSites] (
+    [Id] int NOT NULL IDENTITY,
+    [Region] int NOT NULL,
+    [Description] nvarchar(MAX) NOT NULL,
+    [Location] nvarchar(150) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_ArchaeologicalSites] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_ArchaeologicalSites_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 16:33:31386 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("7"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [CategoriesMuseums] (
+    [Id] int NOT NULL IDENTITY,
+    [categoryName] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_CategoriesMuseums] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_CategoriesMuseums_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 16:33:31392 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Collections] (
+    [Id] int NOT NULL IDENTITY,
+    [collectionName] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Collections] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Collections_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 16:33:31489 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("6"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Excavations] (
+    [Id] int NOT NULL IDENTITY,
+    [Region] int NOT NULL,
+    [Description] nvarchar(MAX) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Excavations] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Excavations_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 16:33:31503 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("14"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Monuments] (
+    [Id] int NOT NULL IDENTITY,
+    [monumentName] nvarchar(150) NOT NULL,
+    [monumentDesc] nvarchar(MAX) NOT NULL,
+    [monumentLocation] nvarchar(150) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Monuments] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Monuments_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 16:33:31510 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("7"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [TextEditor] (
+    [Id] int NOT NULL IDENTITY,
+    [ΕditorialΤeam] nvarchar(max) NOT NULL,
+    [Username] nvarchar(max) NOT NULL,
+    [WorkPhoneNumber] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    CONSTRAINT [PK_TextEditor] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_TextEditor_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 16:33:31519 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("9"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [TimePeriods] (
+    [Id] int NOT NULL IDENTITY,
+    [periodName] nvarchar(max) NOT NULL,
+    [periodStartEnd] nvarchar(max) NOT NULL,
+    [periodDesc] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_TimePeriods] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_TimePeriods_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 16:33:31543 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Failed executing DbCommand ("22"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Museums] (
+    [Id] int NOT NULL,
+    [mus_region] nvarchar(max) NOT NULL,
+    [mus_name] nvarchar(max) NOT NULL,
+    [mus_desc] nvarchar(max) NOT NULL,
+    [mus_address] nvarchar(max) NOT NULL,
+    [mus_coordinate] nvarchar(max) NOT NULL,
+    [mus_phone] nvarchar(max) NOT NULL,
+    [mus_open] nvarchar(max) NOT NULL,
+    [category_Id] int NOT NULL,
+    [collection_Id] int NOT NULL,
+    [timeperiod_Id] int NOT NULL,
+    [mus_avg_rate] float NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Museums] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Museums_CategoriesMuseums_Id] FOREIGN KEY ([Id]) REFERENCES [CategoriesMuseums] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Museums_Collections_Id] FOREIGN KEY ([Id]) REFERENCES [Collections] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Museums_TimePeriods_Id] FOREIGN KEY ([Id]) REFERENCES [TimePeriods] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Museums_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 16:43:20972 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("23"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[05-02-2025 16:43:21011 +02:00 Microsoft.EntityFrameworkCore.Migrations ] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+[05-02-2025 16:43:21030 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("17"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result"
+[05-02-2025 16:43:21085 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;"
+[05-02-2025 16:43:21093 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[05-02-2025 16:43:21094 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+[05-02-2025 16:43:21098 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];"
+[05-02-2025 16:43:21107 +02:00 Microsoft.EntityFrameworkCore.Migrations ] Applying migration '"20250205132044_SecondFixes"'.
+[05-02-2025 16:43:21169 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("6"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Users] ADD [Identity] int NOT NULL DEFAULT 0;"
+[05-02-2025 16:43:21172 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Users] ADD [WorkPhoneNumber] nvarchar(max) NOT NULL DEFAULT N'';"
+[05-02-2025 16:43:21174 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [ArchaeologicalSiteId] int NULL;"
+[05-02-2025 16:43:21175 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [CategoryMuseumId] int NULL;"
+[05-02-2025 16:43:21177 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [CollectionId] int NULL;"
+[05-02-2025 16:43:21178 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [ExcavationId] int NULL;"
+[05-02-2025 16:43:21179 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [InsertedAt] datetime2 NOT NULL DEFAULT '0001-01-01T00:00:00.0000000';"
+[05-02-2025 16:43:21181 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [ModifiedAt] datetime2 NOT NULL DEFAULT '0001-01-01T00:00:00.0000000';"
+[05-02-2025 16:43:21182 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [MonumentId] int NULL;"
+[05-02-2025 16:43:21184 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [MuseumId] int NULL;"
+[05-02-2025 16:43:21185 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [TextEditorId] int NULL;"
+[05-02-2025 16:43:21187 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [TimePeriodId] int NULL;"
+[05-02-2025 16:43:21195 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("8"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [ArchaeologicalSites] (
+    [Id] int NOT NULL IDENTITY,
+    [Region] int NOT NULL,
+    [Description] nvarchar(MAX) NOT NULL,
+    [Location] nvarchar(150) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_ArchaeologicalSites] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_ArchaeologicalSites_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 16:43:21197 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [CategoriesMuseums] (
+    [Id] int NOT NULL IDENTITY,
+    [categoryName] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_CategoriesMuseums] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_CategoriesMuseums_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 16:43:21200 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Collections] (
+    [Id] int NOT NULL IDENTITY,
+    [collectionName] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Collections] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Collections_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 16:43:21203 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Excavations] (
+    [Id] int NOT NULL IDENTITY,
+    [Region] int NOT NULL,
+    [Description] nvarchar(MAX) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Excavations] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Excavations_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 16:43:21206 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Monuments] (
+    [Id] int NOT NULL IDENTITY,
+    [monumentName] nvarchar(150) NOT NULL,
+    [monumentDesc] nvarchar(MAX) NOT NULL,
+    [monumentLocation] nvarchar(150) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Monuments] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Monuments_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 16:43:21209 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [TextEditor] (
+    [Id] int NOT NULL IDENTITY,
+    [ΕditorialΤeam] nvarchar(max) NOT NULL,
+    [Username] nvarchar(max) NOT NULL,
+    [WorkPhoneNumber] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    CONSTRAINT [PK_TextEditor] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_TextEditor_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 16:43:21211 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [TimePeriods] (
+    [Id] int NOT NULL IDENTITY,
+    [periodName] nvarchar(max) NOT NULL,
+    [periodStartEnd] nvarchar(max) NOT NULL,
+    [periodDesc] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_TimePeriods] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_TimePeriods_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 16:43:21230 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Failed executing DbCommand ("19"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Museums] (
+    [Id] int NOT NULL,
+    [mus_region] nvarchar(max) NOT NULL,
+    [mus_name] nvarchar(max) NOT NULL,
+    [mus_desc] nvarchar(max) NOT NULL,
+    [mus_address] nvarchar(max) NOT NULL,
+    [mus_coordinate] nvarchar(max) NOT NULL,
+    [mus_phone] nvarchar(max) NOT NULL,
+    [mus_open] nvarchar(max) NOT NULL,
+    [category_Id] int NOT NULL,
+    [collection_Id] int NOT NULL,
+    [timeperiod_Id] int NOT NULL,
+    [mus_avg_rate] float NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Museums] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Museums_CategoriesMuseums_Id] FOREIGN KEY ([Id]) REFERENCES [CategoriesMuseums] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Museums_Collections_Id] FOREIGN KEY ([Id]) REFERENCES [Collections] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Museums_TimePeriods_Id] FOREIGN KEY ([Id]) REFERENCES [TimePeriods] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Museums_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 16:56:04500 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("13"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[05-02-2025 16:56:04536 +02:00 Microsoft.EntityFrameworkCore.Migrations ] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+[05-02-2025 16:56:04556 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("18"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result"
+[05-02-2025 16:56:04609 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;"
+[05-02-2025 16:56:04617 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1"
+[05-02-2025 16:56:04617 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT OBJECT_ID(N'[__EFMigrationsHistory]');"
+[05-02-2025 16:56:04622 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];"
+[05-02-2025 16:56:04632 +02:00 Microsoft.EntityFrameworkCore.Migrations ] Applying migration '"20250205132044_SecondFixes"'.
+[05-02-2025 16:56:04701 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("11"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Users] ADD [Identity] int NOT NULL DEFAULT 0;"
+[05-02-2025 16:56:04704 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Users] ADD [WorkPhoneNumber] nvarchar(max) NOT NULL DEFAULT N'';"
+[05-02-2025 16:56:04707 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [ArchaeologicalSiteId] int NULL;"
+[05-02-2025 16:56:04710 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [CategoryMuseumId] int NULL;"
+[05-02-2025 16:56:04712 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [CollectionId] int NULL;"
+[05-02-2025 16:56:04714 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [ExcavationId] int NULL;"
+[05-02-2025 16:56:04716 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [InsertedAt] datetime2 NOT NULL DEFAULT '0001-01-01T00:00:00.0000000';"
+[05-02-2025 16:56:04718 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [ModifiedAt] datetime2 NOT NULL DEFAULT '0001-01-01T00:00:00.0000000';"
+[05-02-2025 16:56:04719 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [MonumentId] int NULL;"
+[05-02-2025 16:56:04720 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [MuseumId] int NULL;"
+[05-02-2025 16:56:04722 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [TextEditorId] int NULL;"
+[05-02-2025 16:56:04725 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""ALTER TABLE [Records] ADD [TimePeriodId] int NULL;"
+[05-02-2025 16:56:04734 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("9"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [ArchaeologicalSites] (
+    [Id] int NOT NULL IDENTITY,
+    [Region] int NOT NULL,
+    [Description] nvarchar(MAX) NOT NULL,
+    [Location] nvarchar(150) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_ArchaeologicalSites] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_ArchaeologicalSites_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 16:56:04737 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [CategoriesMuseums] (
+    [Id] int NOT NULL IDENTITY,
+    [categoryName] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_CategoriesMuseums] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_CategoriesMuseums_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 16:56:04740 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Collections] (
+    [Id] int NOT NULL IDENTITY,
+    [collectionName] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Collections] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Collections_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 16:56:04743 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Excavations] (
+    [Id] int NOT NULL IDENTITY,
+    [Region] int NOT NULL,
+    [Description] nvarchar(MAX) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Excavations] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Excavations_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 16:56:05081 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("13"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Monuments] (
+    [Id] int NOT NULL IDENTITY,
+    [monumentName] nvarchar(150) NOT NULL,
+    [monumentDesc] nvarchar(MAX) NOT NULL,
+    [monumentLocation] nvarchar(150) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Monuments] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Monuments_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 16:56:05091 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("9"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [TextEditor] (
+    [Id] int NOT NULL IDENTITY,
+    [ΕditorialΤeam] nvarchar(max) NOT NULL,
+    [Username] nvarchar(max) NOT NULL,
+    [WorkPhoneNumber] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    CONSTRAINT [PK_TextEditor] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_TextEditor_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 16:56:05101 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Executed DbCommand ("10"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [TimePeriods] (
+    [Id] int NOT NULL IDENTITY,
+    [periodName] nvarchar(max) NOT NULL,
+    [periodStartEnd] nvarchar(max) NOT NULL,
+    [periodDesc] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_TimePeriods] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_TimePeriods_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
+[05-02-2025 16:56:05123 +02:00 Microsoft.EntityFrameworkCore.Database.Command ] Failed executing DbCommand ("20"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""CREATE TABLE [Museums] (
+    [Id] int NOT NULL,
+    [mus_region] nvarchar(max) NOT NULL,
+    [mus_name] nvarchar(max) NOT NULL,
+    [mus_desc] nvarchar(max) NOT NULL,
+    [mus_address] nvarchar(max) NOT NULL,
+    [mus_coordinate] nvarchar(max) NOT NULL,
+    [mus_phone] nvarchar(max) NOT NULL,
+    [mus_open] nvarchar(max) NOT NULL,
+    [category_Id] int NOT NULL,
+    [collection_Id] int NOT NULL,
+    [timeperiod_Id] int NOT NULL,
+    [mus_avg_rate] float NOT NULL,
+    [UserId] int NOT NULL,
+    [InsertedAt] datetime2 NOT NULL,
+    [ModifiedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_Museums] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Museums_CategoriesMuseums_Id] FOREIGN KEY ([Id]) REFERENCES [CategoriesMuseums] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Museums_Collections_Id] FOREIGN KEY ([Id]) REFERENCES [Collections] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Museums_TimePeriods_Id] FOREIGN KEY ([Id]) REFERENCES [TimePeriods] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Museums_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);"
