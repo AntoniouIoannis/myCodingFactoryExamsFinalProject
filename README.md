@@ -9,7 +9,7 @@
 - **Readers:**  
   They are encouraged to leave comments and rate the entries, thereby contributing to an interactive community experience.
 
-Developed using **.NET 8** and **C# 12** in **Visual Studio 2022** and powered by **SQL Server Express**, CultureGR combines modern web technologies with a robust database backend.
+Developed using **.NET 8** and **C# 12** in **Visual Studio 2022** and powered by **kestrel the embedded web server of VS**, CultureGR combines modern web technologies with a robust database backend.
 
 ---
 
